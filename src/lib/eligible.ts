@@ -1,0 +1,21 @@
+export const eligible = [
+  "azeemk","telloo55","sandeepnailwal","0xmarcb","vpavlin","divine_economy",
+  "tajudeen_10","elibensasson","blkylimm","alexanderlee314","zkgaylord",
+  "y_cryptoanalyst","0xaishwary","devkrz","rtk17025","moodoo_diary",
+  "fede_intern","lola_mewu","0xlebwa","0xm0ra","ngjupeng","jgonzalezferrer",
+  "tech466","0xsunriser","kreig_dk","philo_4930","aesopsolo","mmagician",
+  "pawmacist","brianseong","himess__","butongren6","ighodarod95",
+  "cryptosense_2","yoheiimf","helpermc","omnicryptx","adeets_22","tazertronofweb3",
+  "muhammedadewa14","mrboneseth","dvmonchain","creptosolutions","cryptee__",
+  "badlandyw","traderibo123","leonstern","a_leutenegger","lykdisairdrop",
+  "anansutiawan","hizzy_tonlover","youngsun","r2jamong","makassjakamaks",
+  "beingrich2000","realmissai","mahcryptonerd","gomtu_xyz","gobinoob_",
+  "riotboy2024","fareedahoyewale","tiur_eth","carefree69_","vaveylacrypto",
+  "krellweb3","jacobeverly","nicolasramsrud","konstanttin_s","laudtheavatar",
+  "0xbaropintar","0xd1ol","alacheng","ddakbbam1","timhaldorsson","jundeu00",
+  "steelorian","fuugaa01","terra_gatsuki","libra_saloni22","nitanshul",
+  "gogogonum","hangome_sol","cukky001","goodboi_global","dee_nftarmy",
+  "namnin_kr","habibilearn","iamyourchaos","angello3400prmr","searchfi_eth",
+  "iamopking","geverduin","hangjin162536","andrewmoh","bobbinth","0xleywing",
+  "imenlikovaog","triple_yap"
+];
