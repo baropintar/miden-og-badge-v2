@@ -7,9 +7,9 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const handle = searchParams.get("handle") ?? "unknown";
 
-    // Semua asset di public
-    const bg = "/miden.jpg";
-    const pfp = "/default-pfp.png"; // fallback local image
+    // Semua asset dari public folder
+    const bg = "/miden.jpg";              // background
+    const pfp = "/default-pfp.png";       // fallback PFP lokal
 
     return new ImageResponse(
       (
