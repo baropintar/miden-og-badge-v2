@@ -16,8 +16,9 @@ export async function GET(req: Request) {
           flexDirection: "column",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(135deg, #0a0a0a, #1c1c1c)",
-          color: "white",
+          border: "6px solid #ff7b00",
+          boxShadow: "0 0 20px #ff7b00, 0 0 40px #ff7b00",
+          color: "purple",
           justifyContent: "center",
           alignItems: "center",
           padding: "40px",
@@ -27,11 +28,13 @@ export async function GET(req: Request) {
         {/* Avatar */}
         <img
           src={avatar}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           style={{
-            borderRadius: "100%",
-            border: "6px solid #fff",
+            borderRadius: "200%",
+            border: "6px solid #ff7b00",
+            boxShadow: "0 0 20px #ff7b00, 0 0 40px #ff7b00",
+
           }}
         />
 
@@ -41,6 +44,7 @@ export async function GET(req: Request) {
             display: "flex",
             fontSize: 60,
             fontWeight: 700,
+            color: "orange",
           }}
         >
           @{handle}
@@ -52,9 +56,10 @@ export async function GET(req: Request) {
             display: "flex",
             fontSize: 40,
             opacity: 0.8,
+            color: "orange",
           }}
         >
-          OG BADGE
+         MIDEN OG BADGE
         </div>
       </div>
     ),
