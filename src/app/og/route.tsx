@@ -7,8 +7,10 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const handle = searchParams.get("handle") ?? "unknown";
 
-    const bg = new URL("/miden.jpg", import.meta.url).toString();
-    const pfp = new URL("/default-pfp.png", import.meta.url).toString();
+    const pfp = handle
+      ? `https://unavatar.io/twitter/${handle}`
+      : "/default-pfp.png"; // letakkan di public/
+    const bg = "/miden.jpg"; // letakkan di public/
 
     return new ImageResponse(
       (
@@ -21,10 +23,9 @@ export async function GET(req: Request) {
             alignItems: "center",
             fontFamily: "sans-serif",
             position: "relative",
-            background: "#000",
           }}
         >
-          {/* Background image */}
+          {/* Background */}
           <img
             src={bg}
             style={{
@@ -32,17 +33,17 @@ export async function GET(req: Request) {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              filter: "brightness(0.5)",
             }}
           />
 
-          {/* Overlay gradient */}
+          {/* Overlay blur */}
           <div
             style={{
               position: "absolute",
               width: "100%",
               height: "100%",
-              background: "linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3))",
+              background: "rgba(0,0,0,0.4)",
+              backdropFilter: "blur(6px)",
             }}
           />
 
@@ -54,73 +55,52 @@ export async function GET(req: Request) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 25,
-              padding: 50,
-              borderRadius: 30,
-              background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(12px)",
-              boxShadow: "0 0 50px rgba(255,122,26,0.6)",
+              gap: 20,
+              padding: 40,
+              borderRadius: 20,
+              background: "rgba(0,0,0,0.55)",
             }}
           >
-            {/* PFP */}
             <img
               src={pfp}
               alt="pfp"
               style={{
-                width: 180,
-                height: 180,
+                width: 160,
+                height: 160,
                 borderRadius: "50%",
                 border: "6px solid #ff7a1a",
                 objectFit: "cover",
-                boxShadow: "0 0 30px rgba(255,122,26,0.8)",
               }}
             />
 
-            {/* Handle */}
             <div
               style={{
                 color: "#fff",
-                fontSize: 46,
-                fontWeight: 800,
-                textShadow: "0 0 15px rgba(0,0,0,0.7), 0 0 8px #ff7a1a",
+                fontSize: 36,
+                fontWeight: 700,
               }}
             >
               @{handle}
             </div>
 
-            {/* Badge Title */}
             <div
               style={{
                 color: "#ff7a1a",
-                fontSize: 56,
+                fontSize: 48,
                 fontWeight: 900,
-                letterSpacing: 4,
+                letterSpacing: 2,
                 textTransform: "uppercase",
-                textShadow: "0 0 20px #ff7a1a, 0 0 10px rgba(0,0,0,0.7)",
               }}
             >
               Miden OG Badge
             </div>
-
-            {/* Optional decoration */}
-            <div
-              style={{
-                width: "80%",
-                height: 2,
-                background: "rgba(255,122,26,0.5)",
-                marginTop: 10,
-              }}
-            />
           </div>
         </div>
       ),
-      {
-        width: 1200,
-        height: 630,
-      }
+      { width: 1200, height: 630 }
     );
-  } catch (e: any) {
-    console.error(e);
-    return new Response("Error generating image", { status: 500 });
+  } catch (err) {
+    console.error("OG Badge generation error:", err);
+    return new Response("Error generating OG Badge", { status: 500 });
   }
 }

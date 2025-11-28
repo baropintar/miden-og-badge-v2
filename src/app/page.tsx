@@ -13,17 +13,33 @@ export default function Home() {
     setLoading(true);
     setEligible(null);
 
-    const res = await fetch("/og", {
-      method: "POST",
-      body: JSON.stringify({ handle }),
-    });
+    try {
+      const res = await fetch("/api/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ handle }),
+      });
 
-    const data = await res.json();
-    setEligible(data.eligible);
-    setLoading(false);
+      if (!res.ok) throw new Error("Server error");
+
+      const data = await res.json();
+      setEligible(data.eligible);
+    } catch (err) {
+      console.error(err);
+      setEligible(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const ogUrl = `${window.location.origin}/og?handle=${handle}&t=${Date.now()}`;
+  const shareBadge = () => {
+    const url = `${window.location.origin}/og?handle=${handle}`;
+    const text = `Check out my Miden OG Badge!`;
+    const twitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      text
+    )}&url=${encodeURIComponent(url)}`;
+    window.open(twitter, "_blank");
+  };
 
   return (
     <div
@@ -34,13 +50,11 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
-      {/* GLASS CARD */}
       <div className="w-full max-w-md bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl text-center">
         <h1 className="text-3xl font-bold text-white mb-6">
           Miden OG Badge Checker
         </h1>
 
-        {/* INPUT */}
         <input
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
@@ -48,7 +62,6 @@ export default function Home() {
           className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none"
         />
 
-        {/* BUTTON */}
         <button
           onClick={checkEligibility}
           disabled={loading}
@@ -57,7 +70,6 @@ export default function Home() {
           {loading ? "Checking..." : "Check Eligibility"}
         </button>
 
-        {/* RESULT */}
         {eligible !== null && (
           <div className="mt-8">
             {eligible ? (
@@ -65,49 +77,18 @@ export default function Home() {
                 <p className="text-green-400 text-xl font-bold mb-4">
                   ✓ Eligible for Miden OG Badge
                 </p>
-
-                {/* BADGE PREVIEW */}
                 <img
-                  src={ogUrl}
+                  src={`/og?handle=${handle}&t=${Date.now()}`}
                   alt="OG Badge"
                   className="rounded-xl border border-white/20 shadow-lg mx-auto"
                 />
 
-                {/* SHARE BUTTONS */}
-                <div className="flex gap-3 mt-4 justify-center flex-wrap">
-                  {/* Copy Link */}
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(ogUrl);
-                      alert("Link badge copied!");
-                    }}
-                    className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-semibold transition"
-                  >
-                    Copy Link
-                  </button>
-
-                  {/* Twitter Share */}
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=Check out my Miden OG Badge!&url=${encodeURIComponent(
-                      ogUrl
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition"
-                  >
-                    Share Twitter
-                  </a>
-
-                  {/* Discord Share */}
-                  <a
-                    href={`https://discord.com/channels/@me`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold transition"
-                  >
-                    Share Discord
-                  </a>
-                </div>
+                <button
+                  onClick={shareBadge}
+                  className="mt-4 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold text-white"
+                >
+                  Share on Twitter
+                </button>
               </>
             ) : (
               <p className="text-red-400 text-xl font-bold">✗ Not Eligible</p>
