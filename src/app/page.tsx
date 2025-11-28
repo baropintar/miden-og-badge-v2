@@ -67,7 +67,7 @@ export default function Home() {
                 {/* BADGE PREVIEW */}
                 <img
                   src={`/og?handle=${handle}`}
-                  alt="OG Badge"
+                  alt="Miden OG Badge"
                   className="rounded-xl border border-white/20 shadow-lg mx-auto"
                 />
               </>
