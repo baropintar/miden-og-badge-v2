@@ -7,60 +7,42 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const handle = searchParams.get("handle") ?? "unknown";
 
-    const pfp = handle
-      ? `https://unavatar.io/twitter/${handle}`
-      : "/default-pfp.png"; // letakkan di public/
-    const bg = "/miden.jpg"; // letakkan di public/
+    const pfp = `https://unavatar.io/twitter/${handle}`;
+    const bg = "/miden.jpg";
 
     return new ImageResponse(
       (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontFamily: "sans-serif",
-            position: "relative",
-          }}
-        >
-          {/* Background */}
+        <div style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: "sans-serif",
+          position: "relative",
+        }}>
           <img
             src={bg}
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
+            style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover" }}
           />
-
-          {/* Overlay blur */}
-          <div
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              background: "rgba(0,0,0,0.4)",
-              backdropFilter: "blur(6px)",
-            }}
-          />
-
-          {/* Badge container */}
-          <div
-            style={{
-              position: "relative",
-              zIndex: 10,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 20,
-              padding: 40,
-              borderRadius: 20,
-              background: "rgba(0,0,0,0.55)",
-            }}
-          >
+          <div style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(6px)",
+          }} />
+          <div style={{
+            position: "relative",
+            zIndex: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 20,
+            padding: 40,
+            borderRadius: 20,
+            background: "rgba(0,0,0,0.55)",
+          }}>
             <img
               src={pfp}
               alt="pfp"
@@ -72,26 +54,16 @@ export async function GET(req: Request) {
                 objectFit: "cover",
               }}
             />
-
-            <div
-              style={{
-                color: "#fff",
-                fontSize: 36,
-                fontWeight: 700,
-              }}
-            >
+            <div style={{ color: "#fff", fontSize: 36, fontWeight: 700 }}>
               @{handle}
             </div>
-
-            <div
-              style={{
-                color: "#ff7a1a",
-                fontSize: 48,
-                fontWeight: 900,
-                letterSpacing: 2,
-                textTransform: "uppercase",
-              }}
-            >
+            <div style={{
+              color: "#ff7a1a",
+              fontSize: 48,
+              fontWeight: 900,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+            }}>
               Miden OG Badge
             </div>
           </div>
