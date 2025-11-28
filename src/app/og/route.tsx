@@ -6,13 +6,14 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const handle = searchParams.get("handle") ?? "";
-    const site = process.env.NEXT_PUBLIC_SITE_URL || "";
 
-    // PFP user
-    const pfp = `https://unavatar.io/twitter/${handle}`;
+    // PFP user, fallback ke local default
+    const pfp = handle
+      ? `https://unavatar.io/twitter/${handle}`
+      : "/default-pfp.png";
 
-    // Background dari public/miden.jpg
-    const bg = `${site}/miden.jpg`;
+    // Background fixed path
+    const bg = "/miden.jpg";
 
     return new ImageResponse(
       (
@@ -85,7 +86,7 @@ export async function GET(req: Request) {
                 marginTop: 10,
               }}
             >
-              @{handle}
+              @{handle || "unknown"}
             </div>
 
             {/* Badge Title */}
