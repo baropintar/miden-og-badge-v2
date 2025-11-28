@@ -7,9 +7,9 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const handle = searchParams.get("handle") ?? "unknown";
 
-    // Semua asset dari public folder
-    const bg = "/miden.jpg";              // background
-    const pfp = "/default-pfp.png";       // fallback PFP lokal
+    // Edge-safe paths
+    const bg = new URL("/miden.jpg", import.meta.url).toString();
+    const pfp = new URL("/default-pfp.png", import.meta.url).toString();
 
     return new ImageResponse(
       (
@@ -100,10 +100,7 @@ export async function GET(req: Request) {
           </div>
         </div>
       ),
-      {
-        width: 1200,
-        height: 630,
-      }
+      { width: 1200, height: 630 }
     );
   } catch (e: any) {
     console.error(e);
