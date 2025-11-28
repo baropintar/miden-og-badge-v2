@@ -13,7 +13,7 @@ export default function Home() {
     setLoading(true);
     setEligible(null);
 
-    const res = await fetch("/api/check", {
+    const res = await fetch("/og", {
       method: "POST",
       body: JSON.stringify({ handle }),
     });
@@ -22,6 +22,8 @@ export default function Home() {
     setEligible(data.eligible);
     setLoading(false);
   };
+
+  const ogUrl = `${window.location.origin}/og?handle=${handle}&t=${Date.now()}`;
 
   return (
     <div
@@ -66,15 +68,49 @@ export default function Home() {
 
                 {/* BADGE PREVIEW */}
                 <img
-                  src={`/og?handle=${handle}`}
-                  alt="Miden OG Badge"
+                  src={ogUrl}
+                  alt="OG Badge"
                   className="rounded-xl border border-white/20 shadow-lg mx-auto"
                 />
+
+                {/* SHARE BUTTONS */}
+                <div className="flex gap-3 mt-4 justify-center flex-wrap">
+                  {/* Copy Link */}
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(ogUrl);
+                      alert("Link badge copied!");
+                    }}
+                    className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-semibold transition"
+                  >
+                    Copy Link
+                  </button>
+
+                  {/* Twitter Share */}
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=Check out my Miden OG Badge!&url=${encodeURIComponent(
+                      ogUrl
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition"
+                  >
+                    Share Twitter
+                  </a>
+
+                  {/* Discord Share */}
+                  <a
+                    href={`https://discord.com/channels/@me`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold transition"
+                  >
+                    Share Discord
+                  </a>
+                </div>
               </>
             ) : (
-              <p className="text-red-400 text-xl font-bold">
-                ✗ Not Eligible
-              </p>
+              <p className="text-red-400 text-xl font-bold">✗ Not Eligible</p>
             )}
           </div>
         )}
