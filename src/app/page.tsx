@@ -13,19 +13,14 @@ export default function Home() {
     setLoading(true);
     setEligible(null);
 
-    try {
-      const res = await fetch("/api/check", {
-        method: "POST",
-        body: JSON.stringify({ handle }),
-      });
-      const data = await res.json();
-      setEligible(data.eligible);
-    } catch (e) {
-      console.error(e);
-      setEligible(false);
-    } finally {
-      setLoading(false);
-    }
+    const res = await fetch("/api/check", {
+      method: "POST",
+      body: JSON.stringify({ handle }),
+    });
+
+    const data = await res.json();
+    setEligible(data.eligible);
+    setLoading(false);
   };
 
   return (
@@ -37,12 +32,13 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
+      {/* GLASS CARD */}
       <div className="w-full max-w-md bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl text-center">
         <h1 className="text-3xl font-bold text-white mb-6">
           Miden OG Badge Checker
         </h1>
 
-        {/* Input */}
+        {/* INPUT */}
         <input
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
@@ -50,16 +46,16 @@ export default function Home() {
           className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none"
         />
 
-        {/* Button */}
+        {/* BUTTON */}
         <button
           onClick={checkEligibility}
           disabled={loading}
-          className="w-full mt-4 py-3 rounded-xl bg-orange-600 hover:bg-orange-700 transition font-semibold text-white disabled:opacity-50"
+          className="w-full mt-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition font-semibold text-white disabled:opacity-50"
         >
           {loading ? "Checking..." : "Check Eligibility"}
         </button>
 
-        {/* Result */}
+        {/* RESULT */}
         {eligible !== null && (
           <div className="mt-8">
             {eligible ? (
@@ -68,7 +64,7 @@ export default function Home() {
                   ✓ Eligible for Miden OG Badge
                 </p>
 
-                {/* OG Badge */}
+                {/* BADGE PREVIEW */}
                 <img
                   src={`/og?handle=${handle}`}
                   alt="OG Badge"
